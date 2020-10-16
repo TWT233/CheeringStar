@@ -1,6 +1,7 @@
 # Configs
 
-config/config.json
+config/
+!config/config.placeholder.json
 
 
 
