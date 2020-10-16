@@ -4,7 +4,7 @@ import json
 import discord
 from discord.ext import commands
 
-from .cmd import b
+from cmd import b
 
 description = '''An example bot to showcase the discord.ext.commands extension
 module.
@@ -15,7 +15,7 @@ token = json.load(open('../config/config.json', 'r'))['bot']['token']
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix='!', description=description, intents=intents)
+bot = commands.Bot(command_prefix='.', description=description, intents=intents)
 
 
 @bot.event
@@ -24,6 +24,6 @@ async def on_ready():
     print('------')
 
 
-bot.add_command(b.__base)
+bot.add_command(b.action)
 
 bot.run(token)
