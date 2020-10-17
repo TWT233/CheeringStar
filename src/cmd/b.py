@@ -1,4 +1,3 @@
-from discord import Client
 from discord.ext import commands
 
 from doc import StatusSheet
