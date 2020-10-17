@@ -19,11 +19,11 @@ class StatusSheet:
         return StatusSheet.ins().sheet
 
     @staticmethod
-    def update_b(exe: str, dmg: str, time: str, cmt: str, rep: str):
+    def update_b(exe: str, dmg: str, cmt: str, rep: str):
         sheet = StatusSheet.sheet().get_all_values()
         for i in range(len(sheet)):
             if sheet[i][0] == (rep or exe):
-                StatusSheet.sheet().update('B{}:E{}'.format(i + 1, i + 1), [[dmg, time, cmt, rep and exe or '']])
+                StatusSheet.sheet().update('B{}:D{}'.format(i + 1, i + 1), [[dmg, cmt, rep and exe or '']])
 
     @staticmethod
     def ins():
