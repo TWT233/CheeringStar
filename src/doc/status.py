@@ -12,11 +12,11 @@ class StatusSheet:
 
     @staticmethod
     def account():
-        return StatusSheet.ins().account
+        return StatusSheet.__instance.account
 
     @staticmethod
     def sheet():
-        return StatusSheet.ins().sheet
+        return StatusSheet.__instance.sheet
 
     @staticmethod
     def update_b(exe: str, dmg: str, cmt: str, rep: str):
