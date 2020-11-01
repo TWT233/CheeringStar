@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-from doc import tree_rip
+import doc
 from member import get_user_from_id
 
 
@@ -10,6 +10,6 @@ async def action(ctx: commands.Context):
 
     user = get_user_from_id(ctx.author.id)
     if user['permission'] >= 1:
-        tree_rip()
+        doc.StatusSheet.call_clean()
         await ctx.send('call表已清空')
     return
