@@ -4,35 +4,26 @@ import os
 
 
 class Battle:
-    __instance = None
+    boss: dict
+    filename: str
+    config: dict
+    log: list
 
-    def __init__(self, boss, filename):
-        self.boss = boss
-        self.filename = os.path.abspath(filename)
-        with open(self.filename, 'r') as f:
-            self.config = json.load(f)
-        Battle.__instance = self
-
-    @staticmethod
-    def ins():
-        return Battle.__instance
-
-    @staticmethod
-    def filename():
-        return Battle.__instance.filename
+    def __init__(self, boss, log_file_name):
+        Battle.boss = boss
+        Battle.filename = os.path.abspath(log_file_name)
+        Battle.log = []
+        with open(Battle.filename, 'r', encoding='UTF-8') as f:
+            Battle.config = json.load(f)
 
     @staticmethod
-    def boss():
-        return Battle.__instance.config['boss']
-
-    @staticmethod
-    def current():
-        return Battle.__instance.config['current']
+    def current() -> dict:
+        return Battle.config['current']
 
     @staticmethod
     def sync_battle():
-        with open(Battle.filename(), 'w') as f:
-            json.dump(Battle.ins().config, f)
+        with open(Battle.filename, 'w') as f:
+            json.dump(Battle.config, f)
 
     @staticmethod
     def get_stage(c_round: int):
@@ -42,21 +33,35 @@ class Battle:
             return 'B'
 
     @staticmethod
-    def get_remain_time(dmg: int, c_hp: int):
-        return math.ceil(c_hp * 90 / dmg) + 20
-
-    @staticmethod
     def commit(dmg: int):
         current = Battle.current()
+        r_time = 0
+
+        before = json.dumps(current)
+
         if current['hp'] <= dmg:
-            r_time = Battle.get_remain_time(dmg, current['hp'])
+            r_time = min(110 - math.ceil(current['hp'] * 90 / dmg), 90)
             if current['boss'] == 5:
                 current['round'] += 1
                 current['boss'] = 1
             else:
                 current['boss'] += 1
-            current['hp'] = Battle.boss()[Battle.get_stage(current['round'])]['hp'][current['boss']]
-            return r_time
+            current['hp'] = Battle.boss[Battle.get_stage(current['round'])]['hp'][current['boss']]
         else:
             current['hp'] -= dmg
-            return 0
+
+        Battle.log.append(before)
+
+        return r_time
+
+    @staticmethod
+    def undo():
+        try:
+            last = Battle.log.pop()
+        except IndexError:
+            return
+        else:
+            pass
+
+        Battle.config['current'] = json.loads(last)
+        pass
