@@ -6,7 +6,7 @@ from member import get_user_from_id, get_user_from_name
 
 @commands.command(name='b')
 async def action(ctx: commands.Context, *args):
-    print('[cmd] b {}'.format(args))
+    print('[cmd] {} b {}'.format(ctx.author.name, args))
 
     dmg = len(args) > 0 and args[0] or ''
     cmt = len(args) > 1 and args[1] or ''
