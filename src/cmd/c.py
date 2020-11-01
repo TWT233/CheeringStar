@@ -15,4 +15,12 @@ async def action(ctx: commands.Context, *args):
     remain_time = Battle.commit(dmg)
 
     if remain_time > 0:
-        tree_rip()
+        doc.StatusSheet.call_clean()
+
+    current = Battle.current()
+
+    await ctx.send(
+        '{} 出刀完成: {} {} {}\n当前进度: {}@{}-{}'.format(ctx.author.mention, dmg,
+                                                   remain_time and '返' + str(remain_time) + 's' or '',
+                                                   rep, current['hp'], current['round'], current['boss']))
+    return
