@@ -2,28 +2,22 @@ import gspread
 
 
 class StatusSheet:
-    __instance = None
+    account: gspread.client.Client
+    sheets: gspread.models.Spreadsheet
+    sheet: gspread.models.Worksheet
 
     def __init__(self, account_key: str, sheets_key: str, sheet_title: str):
-        self.account = gspread.service_account(account_key)
-        self.sheets = self.account.open_by_key(sheets_key)
-        self.sheet = self.sheets.worksheet(sheet_title)
-        StatusSheet.__instance = self
-
-    @staticmethod
-    def account():
-        return StatusSheet.__instance.account
-
-    @staticmethod
-    def sheet():
-        return StatusSheet.__instance.sheet
+        StatusSheet.account = gspread.service_account(account_key)
+        StatusSheet.sheets = StatusSheet.account.open_by_key(sheets_key)
+        StatusSheet.sheet = StatusSheet.sheets.worksheet(sheet_title)
+        pass
 
     @staticmethod
     def update_b(exe: str, dmg: str, cmt: str, rep: str):
-        sheet = StatusSheet.sheet().get_all_values()
+        sheet = StatusSheet.sheet.get_all_values()
         for i in range(len(sheet)):
             if sheet[i][0] == (rep or exe):
-                StatusSheet.sheet().update('B{}:D{}'.format(i + 1, i + 1), [[dmg, cmt, rep and exe or '']])
+                StatusSheet.sheet.update('B{}:D{}'.format(i + 1, i + 1), [[dmg, cmt, rep and exe or '']])
 
     @staticmethod
     def call_clean():
