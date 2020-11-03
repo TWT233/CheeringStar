@@ -2,26 +2,33 @@
 
 # -*- coding: utf-8 -*-
 
-import json
-
 import discord
 from discord.ext import commands
 
 import cmd
-import doc
-import battle
+from doc import StatusSheet, DamageRecord
+from config import Common
+from battle import Battle
 
-config = json.load(open('../config/config.json', 'r', encoding='UTF-8'))
+# init config
+Common('../config/config.json')
+print('[ init ] Config loaded. Registered members: {}'.format(len(Common.guild()['members'])))
+print('[ init ] ------')
 
-# google doc init
+# init battle logger
+Battle(Common.c['boss'], '../config/battle.json')
+print('[ init ] Battle logger online. Current: {}-{}'.format(Battle.current()['round'], Battle.current()['boss']))
+print('[ init ] ------')
 
-doc.StatusSheet('../config/' + config['token']['google'], config['sheets']['key'], config['sheets']['status'])
+# init google doc
+StatusSheet('../config/' + Common.token()['google'], Common.sheets()['key'], Common.sheets()['status'])
+print('[ init ] Status sheet loaded.')
+print('[ init ] ------')
+DamageRecord('../config/' + Common.token()['google'], Common.sheets()['key'], Common.sheets()['damage'][0])
+print('[ init ] Damage sheet loaded.')
+print('[ init ] ------')
 
-# battle logger init
-battle.Battle(config['boss'], '../config/battle.json')
-
-# discord bot init
-
+# init discord bot
 description = '''hatsunene'''
 
 intents = discord.Intents.default()
@@ -32,9 +39,8 @@ bot = commands.Bot(command_prefix='#', description=description, intents=intents)
 
 @bot.event
 async def on_ready():
-    print('Logged in as {} [{}]'.format(bot.user.name, bot.user.id))
-    print('------')
-
+    print('[ init ] Bot online. Logged in as {} [{}]'.format(bot.user.name, bot.user.id))
+    print('[ init ] ------')
 
 bot.add_command(cmd.bd.action)
 bot.add_command(cmd.cd.action)
@@ -44,4 +50,5 @@ bot.add_command(cmd.ws.action)
 bot.add_command(cmd.shu_clean.action)
 bot.add_command(cmd.undo.action)
 
-bot.run(config['token']['discord'])
+# run
+bot.run(Common.c['token']['discord'])
