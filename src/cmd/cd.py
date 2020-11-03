@@ -14,7 +14,7 @@ async def action(ctx: commands.Context, *args):
     remain_time = Battle.commit(int(dmg))
 
     if remain_time > 0:
-        doc.StatusSheet.call_clean()
+        doc.StatusSheet.shu_clean()
 
     current = Battle.current()
 

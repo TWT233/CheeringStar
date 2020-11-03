@@ -38,7 +38,7 @@ async def on_ready():
 
 bot.add_command(cmd.bd.action)
 bot.add_command(cmd.cd.action)
-bot.add_command(cmd.call_clean.action)
+bot.add_command(cmd.shu_clean.action)
 bot.add_command(cmd.cc.action)
 bot.add_command(cmd.cs.action)
 bot.add_command(cmd.ws.action)

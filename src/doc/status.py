@@ -17,13 +17,13 @@ class StatusSheet:
         pass
 
     @staticmethod
-    def sheet_update(range_name, values=None, **kwargs):
-        StatusSheet.__sheet.update(range_name, values, kwargs)
+    def sheet_update(range_name, values=None):
+        StatusSheet.__sheet.update(range_name, values)
         StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
 
     @staticmethod
-    def sheet_batch_update(data, **kwargs):
-        StatusSheet.__sheet.batch_update(data, kwargs)
+    def sheet_batch_update(data):
+        StatusSheet.__sheet.batch_update(data)
         StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
 
     @staticmethod
@@ -33,7 +33,7 @@ class StatusSheet:
                 StatusSheet.sheet_update('B{}:D{}'.format(i + 1, i + 1), [[dmg, cmt, rep and exe or '']])
 
     @staticmethod
-    def call_clean():
+    def shu_clean():
         update_list = []
 
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
