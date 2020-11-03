@@ -1,21 +1,33 @@
-# This example requires the 'members' privileged intents
+#!/usr/bin/python
+
+# -*- coding: utf-8 -*-
+
 import json
 
 import discord
 from discord.ext import commands
 
-from cmd import b
+import cmd
+import doc
+import battle
 
-description = '''An example bot to showcase the discord.ext.commands extension
-module.
-There are a number of utility commands being showcased here.'''
+config = json.load(open('../config/config.json', 'r', encoding='UTF-8'))
 
-token = json.load(open('../config/config.json', 'r'))['bot']['token']
+# google doc init
+
+doc.StatusSheet('../config/' + config['token']['google'], config['sheets']['key'], config['sheets']['status'])
+
+# battle logger init
+battle.Battle(config['boss'], '../config/battle.json')
+
+# discord bot init
+
+description = '''hatsunene'''
 
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix='.', description=description, intents=intents)
+bot = commands.Bot(command_prefix='#', description=description, intents=intents)
 
 
 @bot.event
@@ -24,6 +36,11 @@ async def on_ready():
     print('------')
 
 
-bot.add_command(b.action)
+bot.add_command(cmd.bd.action)
+bot.add_command(cmd.cd.action)
+bot.add_command(cmd.call_clean.action)
+bot.add_command(cmd.cc.action)
+bot.add_command(cmd.cs.action)
+bot.add_command(cmd.ws.action)
 
-bot.run(token)
+bot.run(config['token']['discord'])
