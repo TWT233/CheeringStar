@@ -1,6 +1,6 @@
 # Configs
 
-config/
+/config/
 !config/config.placeholder.json
 
 token.pickle
