@@ -21,9 +21,8 @@ class Battle:
         return Battle.config['current']
 
     @staticmethod
-    def sync_battle():
-        with open(Battle.filename, 'w') as f:
-            json.dump(Battle.config, f)
+    def sync():
+        json.dump(Battle.status, open(Battle.filename, 'w'))
 
     @staticmethod
     def get_stage(c_round: int):
