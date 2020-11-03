@@ -6,7 +6,7 @@ import os
 class Battle:
     boss: dict
     filename: str
-    config: dict
+    status: dict
     log: list
 
     def __init__(self, boss, log_file_name):
@@ -14,11 +14,11 @@ class Battle:
         Battle.filename = os.path.abspath(log_file_name)
         Battle.log = []
         with open(Battle.filename, 'r', encoding='UTF-8') as f:
-            Battle.config = json.load(f)
+            Battle.status = json.load(f)
 
     @staticmethod
     def current() -> dict:
-        return Battle.config['current']
+        return Battle.status['current']
 
     @staticmethod
     def sync():
@@ -62,5 +62,8 @@ class Battle:
         else:
             pass
 
-        Battle.config['current'] = json.loads(last)
+        last_obj = json.loads(last_str)
+
+        Battle.status['current'] = last_obj['current']
+
         pass
