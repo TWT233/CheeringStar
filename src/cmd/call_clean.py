@@ -11,5 +11,5 @@ async def action(ctx: commands.Context):
     user = get_user_from_id(ctx.author.id)
     if user['permission'] >= 1:
         doc.StatusSheet.call_clean()
-        await ctx.send('call表已清空')
+        await ctx.send(ctx.author.mention + ' call表已清空')
     return
