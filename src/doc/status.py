@@ -44,3 +44,23 @@ class StatusSheet:
 
         StatusSheet.sheet_batch_update(update_list)
         return
+
+    @staticmethod
+    def get_candao():
+        candao_list = []
+
+        for i in StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end]:
+            if i[6]:
+                candao_list.append({'name': i[3], 'cmt': i[6]})
+
+        return candao_list
+
+    @staticmethod
+    def get_shu():
+        shu_list = []
+
+        for i in StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end]:
+            if i[4] or i[5]:
+                shu_list.append({'name': i[3], 'dmg': i[4], 'cmt': i[5]})
+
+        return shu_list
