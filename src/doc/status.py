@@ -30,7 +30,7 @@ class StatusSheet:
     def update_b(exe: str, dmg: str, cmt: str, rep: str):
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
             if StatusSheet.sheet[i][3] == (rep or exe):
-                StatusSheet.sheet_update('B{}:D{}'.format(i + 1, i + 1), [[dmg, cmt, rep and exe or '']])
+                StatusSheet.sheet_update('E{}:F{}'.format(i + 1, i + 1), [[dmg, cmt]])
 
     @staticmethod
     def update_c(exe: str, cmt: str, rep: str):
