@@ -33,6 +33,12 @@ class StatusSheet:
                 StatusSheet.sheet_update('B{}:D{}'.format(i + 1, i + 1), [[dmg, cmt, rep and exe or '']])
 
     @staticmethod
+    def update_c(exe: str, cmt: str, rep: str):
+        for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
+            if StatusSheet.sheet[i][3] == (rep or exe):
+                StatusSheet.sheet_update('G{}'.format(i + 1), [[cmt]])
+
+    @staticmethod
     def shu_clean():
         update_list = []
 
