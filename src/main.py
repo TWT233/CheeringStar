@@ -43,6 +43,7 @@ async def on_ready():
     print('[ init ] ------')
 
 bot.add_command(cmd.bd.action)
+bot.add_command(cmd.c.action)
 bot.add_command(cmd.cd.action)
 bot.add_command(cmd.cc.action)
 bot.add_command(cmd.cs.action)
