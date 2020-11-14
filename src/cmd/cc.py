@@ -3,7 +3,7 @@ from discord.ext import commands
 import doc
 
 
-@commands.command(name='cc')
+@commands.command(name='cc', aliases=['查殘'])
 async def action(ctx: commands.Context):
     print('[cmd] cc {}'.format(ctx.author.name))
 

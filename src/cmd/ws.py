@@ -1,7 +1,7 @@
 from discord.ext import commands
 
 
-@commands.command(name='ws')
+@commands.command(name='ws', aliases=['王死'])
 async def action(ctx: commands.Context):
     print('[cmd] ws {}'.format(ctx.author.name))
 

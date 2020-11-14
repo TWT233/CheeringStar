@@ -5,7 +5,7 @@ from exception import MemberNotFound
 from member import get_user_from_id, get_user_from_name
 
 
-@commands.command(name='bd')
+@commands.command(name='bd', aliases=['報'])
 async def action(ctx: commands.Context, *args):
     print('[cmd] bd {} {}'.format(ctx.author.name, args))
 

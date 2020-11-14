@@ -4,7 +4,7 @@ import doc
 from battle import *
 
 
-@commands.command(name='cd')
+@commands.command(name='cd', aliases=['出'])
 async def action(ctx: commands.Context, *args):
     print('[cmd] cd {} {}'.format(ctx.author.name, args))
 
