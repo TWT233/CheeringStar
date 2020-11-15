@@ -34,7 +34,7 @@ description = '''hatsunene'''
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(command_prefix='#', description=description, intents=intents)
+bot = commands.Bot(command_prefix=['!', '！'], description=description, intents=intents)
 
 
 @bot.event
@@ -42,11 +42,13 @@ async def on_ready():
     print('[ init ] Bot online. Logged in as {} [{}]'.format(bot.user.name, bot.user.id))
     print('[ init ] ------')
 
+
 bot.add_command(cmd.bd.action)
 bot.add_command(cmd.c.action)
 bot.add_command(cmd.cd.action)
 bot.add_command(cmd.cc.action)
 bot.add_command(cmd.cs.action)
+bot.add_command(cmd.join.action)
 bot.add_command(cmd.ws.action)
 bot.add_command(cmd.shu_clean.action)
 bot.add_command(cmd.undo.action)

@@ -2,12 +2,12 @@ import gspread
 
 
 class StatusSheet:
+    __begin = 3
+    __end = 33
     account: gspread.client.Client
     sheets: gspread.models.Spreadsheet
     sheet: list
     __sheet: gspread.models.Worksheet
-    __begin = 3
-    __end = 33
 
     def __init__(self, account_key: str, sheets_key: str, sheet_title: str):
         StatusSheet.account = gspread.service_account(account_key)
@@ -25,6 +25,15 @@ class StatusSheet:
     def sheet_batch_update(data):
         StatusSheet.__sheet.batch_update(data)
         StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
+
+    @staticmethod
+    def add_member(nickname):
+        for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
+            if StatusSheet.sheet[i][3] == '':
+                StatusSheet.sheet_update('D{}'.format(i + 1), [[nickname]])
+                return
+            if StatusSheet.sheet[i][3] == nickname:
+                return
 
     @staticmethod
     def update_b(exe: str, dmg: str, cmt: str, rep: str):
