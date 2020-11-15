@@ -56,7 +56,7 @@ class Battle:
     @staticmethod
     def undo():
         try:
-            last = Battle.log.pop()
+            last_str = Battle.log.pop()
         except IndexError:
             return
         else:
