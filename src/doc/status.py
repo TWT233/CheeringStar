@@ -48,6 +48,12 @@ class StatusSheet:
                 StatusSheet.sheet_update('G{}'.format(i + 1), [[cmt]])
 
     @staticmethod
+    def update_jd(exe: str, rep: str, enter: bool):
+        for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
+            if StatusSheet.sheet[i][3] == (rep or exe):
+                StatusSheet.sheet_update('A{}'.format(i + 1), [[enter]])
+
+    @staticmethod
     def shu_clean():
         update_list = []
 
