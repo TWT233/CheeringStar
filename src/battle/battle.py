@@ -26,7 +26,7 @@ class Battle:
 
     @staticmethod
     def sync():
-        json.dump(Battle.status, open(Battle.filename, 'w'), ensure_ascii=False)
+        json.dump(Battle.status, open(Battle.filename, 'w'), ensure_ascii=False, indent=4)
 
     @staticmethod
     def get_stage(c_round: int):

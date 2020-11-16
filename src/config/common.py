@@ -14,7 +14,7 @@ class Common:
 
     @staticmethod
     def sync():
-        json.dump(Common.c, open(Common.filename, 'w', encoding='UTF-8'), ensure_ascii=False)
+        json.dump(Common.c, open(Common.filename, 'w', encoding='UTF-8'), ensure_ascii=False, indent=4)
 
     @staticmethod
     def token() -> dict:
