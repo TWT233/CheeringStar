@@ -69,7 +69,7 @@ class StatusSheet:
 
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
             if StatusSheet.sheet[i][0] or StatusSheet.sheet[i][4] or StatusSheet.sheet[i][5]:
-                update_list.append({'range': 'A{}'.format(i + 1), 'values': [['']]})
+                update_list.append({'range': 'A{}'.format(i + 1), 'values': [[False]]})
                 update_list.append({'range': 'E{}'.format(i + 1), 'values': [['']]})
                 update_list.append({'range': 'F{}'.format(i + 1), 'values': [['']]})
 
