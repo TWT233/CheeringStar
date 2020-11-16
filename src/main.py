@@ -54,6 +54,7 @@ bot.add_command(cmd.join.action)
 bot.add_command(cmd.ws.action)
 bot.add_command(cmd.shu_clean.action)
 bot.add_command(cmd.undo.action)
+bot.add_command(cmd.zt.action)
 
 # run
 bot.run(Common.c['token']['discord'])
