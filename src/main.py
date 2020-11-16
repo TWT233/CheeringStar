@@ -6,9 +6,9 @@ import discord
 from discord.ext import commands
 
 import cmd
-from doc import StatusSheet, DamageRecord
-from config import Common
 from battle import Battle
+from config import Common
+from doc import StatusSheet, DamageRecord
 
 # init config
 Common('../config/config.json')
@@ -48,6 +48,8 @@ bot.add_command(cmd.c.action)
 bot.add_command(cmd.cd.action)
 bot.add_command(cmd.cc.action)
 bot.add_command(cmd.cs.action)
+bot.add_command(cmd.jindao.action)
+bot.add_command(cmd.jidao.action)
 bot.add_command(cmd.join.action)
 bot.add_command(cmd.ws.action)
 bot.add_command(cmd.shu_clean.action)
