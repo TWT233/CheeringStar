@@ -1,5 +1,7 @@
 import gspread
 
+from config import Common
+
 
 class StatusSheet:
     __begin = 3
@@ -27,10 +29,18 @@ class StatusSheet:
         StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
 
     @staticmethod
-    def add_member(nickname):
+    def add_member(nickname, idx: int):
+        StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
             if StatusSheet.sheet[i][3] == '':
                 StatusSheet.sheet_update('D{}'.format(i + 1), [[nickname]])
+
+                member_entry = {'name': nickname, 'id': idx, 'permission': 0}
+
+                Common.guild()['members'].append(member_entry)
+                Common.sync()
+
+                print(member_entry)
                 return
             if StatusSheet.sheet[i][3] == nickname:
                 return
