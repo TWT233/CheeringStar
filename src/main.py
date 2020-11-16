@@ -24,7 +24,7 @@ print('[ init ] ------')
 StatusSheet('../config/' + Common.token()['google'], Common.sheets()['key'], Common.sheets()['status'])
 print('[ init ] Status sheet loaded.')
 print('[ init ] ------')
-DamageRecord('../config/' + Common.token()['google'], Common.sheets()['key'], Common.sheets()['damage'][0])
+DamageRecord('../config/' + Common.token()['google'], Common.sheets()['key'], Common.sheets()['damage'])
 print('[ init ] Damage sheet loaded.')
 print('[ init ] ------')
 

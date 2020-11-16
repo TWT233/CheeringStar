@@ -6,8 +6,8 @@ class DamageRecord:
     sheets: gspread.models.Spreadsheet
     sheet: list
     __sheet: gspread.models.Worksheet
-    __begin = 3
-    __end = 33
+    __begin = 2
+    __end = 32
 
     def __init__(self, account_key: str, sheets_key: str, sheet_title: str):
         DamageRecord.account = gspread.service_account(account_key)
@@ -27,5 +27,15 @@ class DamageRecord:
         DamageRecord.sheet = DamageRecord.__sheet.get_all_values()
 
     @staticmethod
-    def commit(exe: str, dmg: int, rep: str, r_time: int):
+    def commit(r: int, boss: int, dmg: int, exe: str, rep: str, r_time: bool):
+        DamageRecord.sheet = DamageRecord.__sheet.get_all_values()
+        for i in range(DamageRecord.__begin, min(len(DamageRecord.sheet), DamageRecord.__end)):
+            if DamageRecord.sheet[i][0] == (rep or exe):
+                rol: list = DamageRecord.sheet[i]
+                for col in [1, 5, 9, 13, 17, 21]:
+                    if rol[col] == '':
+                        DamageRecord.sheet_update(
+                            '{}{}:{}{}'.format(chr(ord('A') + col), i + 1, chr(ord('D') + col), i + 1),
+                            [['{}-{}'.format(r, boss), dmg, rep and exe or '', r_time]])
+                        return
         pass
