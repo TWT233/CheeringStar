@@ -10,7 +10,8 @@ class Common:
 
     def __init__(self, filename: str):
         Common.filename = os.path.abspath(filename)
-        Common.c = json.load(open(filename, 'r', encoding='UTF-8'))
+        with open(filename, 'r', encoding='UTF-8') as f:
+            Common.c = json.load(f)
 
     @staticmethod
     def sync():
