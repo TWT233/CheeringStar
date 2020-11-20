@@ -1,6 +1,7 @@
 import gspread
 
 from config import Common
+from exception import AlreadyOnline
 
 
 class StatusSheet:
@@ -33,6 +34,11 @@ class StatusSheet:
         StatusSheet.sync()
 
     @staticmethod
+    def find(row: int, content: str):
+        with range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)) as r:
+            return filter(lambda e: StatusSheet.sheet[e][row] == content, r)
+
+    @staticmethod
     def add_member(nickname, idx: int):
         StatusSheet.sync()
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
@@ -51,32 +57,28 @@ class StatusSheet:
 
     @staticmethod
     def update_b(exe: str, dmg: str, cmt: str, rep: str):
-        for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
-            if StatusSheet.sheet[i][3] == (rep or exe):
-                StatusSheet.sheet_update('E{}:F{}'.format(i + 1, i + 1), [[dmg, cmt]])
+        for i in StatusSheet.find(3, rep or exe):
+            StatusSheet.sheet_update('E{}:F{}'.format(i + 1, i + 1), [[dmg, cmt]])
 
     @staticmethod
     def update_c(exe: str, cmt: str, rep: str):
-        for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
-            if StatusSheet.sheet[i][3] == (rep or exe):
-                StatusSheet.sheet_update('G{}'.format(i + 1), [[cmt]])
+        for i in StatusSheet.find(3, rep or exe):
+            StatusSheet.sheet_update('G{}'.format(i + 1), [[cmt]])
 
     @staticmethod
     def update_d(exe: str, rep: str, logout: bool):
-        for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
-            if StatusSheet.sheet[i][3] == rep:
-                if logout and StatusSheet.sheet[i][2] == exe:
-                    StatusSheet.sheet_update('C{}'.format(i + 1), [['']])
-                    return
-                else:
-                    StatusSheet.sheet_update('C{}'.format(i + 1), [[logout and '' or exe]])
-                    return
+        for i in StatusSheet.find(3, rep):
+            if logout and StatusSheet.sheet[i][2] == exe:
+                StatusSheet.sheet_update('C{}'.format(i + 1), [['']])
+            elif not logout and StatusSheet.sheet[i][2] == '':
+                StatusSheet.sheet_update('C{}'.format(i + 1), [[exe]])
+            elif not logout and StatusSheet.sheet[i][2] != exe:
+                raise AlreadyOnline(rep, StatusSheet.sheet[i][2])
 
     @staticmethod
     def update_jd(exe: str, rep: str, enter: bool):
-        for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
-            if StatusSheet.sheet[i][3] == (rep or exe):
-                StatusSheet.sheet_update('A{}'.format(i + 1), [[enter]])
+        for i in StatusSheet.find(3, rep or exe):
+            StatusSheet.sheet_update('A{}'.format(i + 1), [[enter]])
 
     @staticmethod
     def shu_clean():
