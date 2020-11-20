@@ -13,11 +13,10 @@ async def action(ctx: commands.Context, dmg, cmt, *args):
 
     try:
         exe = get_user_from_id(ctx.author.id)
-        rep_user = get_user_from_name(rep)
 
         StatusSheet.update_b(exe['name'], dmg, cmt, rep)
         await ctx.send('{} 报刀完成: {} "{}" {}'.format(
-            ctx.author.mention, dmg, cmt, ctx.bot.get_user(rep_user['id']).mention))
+            ctx.author.mention, dmg, cmt, rep and ctx.bot.get_user(get_user_from_name(rep)['id']).mention or ''))
     except MemberNotFound as e:
         await ctx.send("未找到成员：" + e.expecting)
     finally:
