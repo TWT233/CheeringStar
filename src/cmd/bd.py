@@ -17,13 +17,13 @@ async def action(ctx: commands.Context, dmg, cmt, *args):
         StatusSheet.update_b(exe['name'], dmg, cmt, rep)
         await ctx.send('{} 报刀完成: {} "{}" {}'.format(
             ctx.author.mention, dmg, cmt, rep and ctx.bot.get_user(get_user_from_name(rep)['id']).mention or ''))
+
     except MemberNotFound as e:
-        await ctx.send("未找到成员：" + e.expecting)
+        await ctx.send("找不到成員：" + e.expecting)
     finally:
         return
 
 
 @action.error
-async def error_handling(ctx, error):
-    if isinstance(error, commands.BadArgument):
-        await ctx.send("参数错误")
+async def error_handling(ctx: commands.Context):
+    await ctx.send("{} 指令解析遇到錯誤啦，請重新檢查".format(ctx.author.mention))
