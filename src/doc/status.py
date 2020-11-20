@@ -19,18 +19,22 @@ class StatusSheet:
         pass
 
     @staticmethod
+    def sync():
+        StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
+
+    @staticmethod
     def sheet_update(range_name, values=None):
         StatusSheet.__sheet.update(range_name, values)
-        StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
+        StatusSheet.sync()
 
     @staticmethod
     def sheet_batch_update(data):
         StatusSheet.__sheet.batch_update(data)
-        StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
+        StatusSheet.sync()
 
     @staticmethod
     def add_member(nickname, idx: int):
-        StatusSheet.sheet = StatusSheet.__sheet.get_all_values()
+        StatusSheet.sync()
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
             if StatusSheet.sheet[i][3] == '':
                 StatusSheet.sheet_update('D{}'.format(i + 1), [[nickname]])
@@ -76,6 +80,7 @@ class StatusSheet:
 
     @staticmethod
     def shu_clean():
+        StatusSheet.sync()
         update_list = []
 
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
@@ -89,35 +94,21 @@ class StatusSheet:
 
     @staticmethod
     def get_candao():
-        candao_list = []
-
-        for i in StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end]:
-            if i[6]:
-                candao_list.append({'name': i[3], 'cmt': i[6]})
-
-        return candao_list
+        StatusSheet.sync()
+        with StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end] as table:
+            return [{'name': i[3], 'cmt': i[6]} for i in filter(lambda i: i[6], table)]
 
     @staticmethod
     def get_shu():
-        shu_list = []
-
-        for i in StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end]:
-            if i[4] or i[5]:
-                shu_list.append({'name': i[3], 'dmg': i[4], 'cmt': i[5]})
-
-        return shu_list
+        StatusSheet.sync()
+        with StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end] as table:
+            return [{'name': i[3], 'dmg': i[4], 'cmt': i[5]} for i in filter(lambda i: i[4] or i[5], table)]
 
     @staticmethod
     def get_d(exe: str):
-        d_list = {
-            "rep": [],
-            "reped": []
-        }
-
-        for i in StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end]:
-            if i[2] == exe:
-                d_list['rep'].append(i[3])
-            if i[3] == exe:
-                d_list['reped'].append(i[2])
-
-        return d_list
+        StatusSheet.sync()
+        with StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end] as table:
+            return {
+                "rep": [i[3] for i in filter(lambda i: i[2] == exe, table)],
+                "reped": [i[2] for i in filter(lambda i: i[3] == exe, table)]
+            }
