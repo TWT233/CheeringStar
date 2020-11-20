@@ -22,14 +22,14 @@ async def action(ctx: commands.Context, *args):
         ret += '\n我在代誰：'
         for i in d_list['rep']:
             ret += '\n' + i
-        await ctx.send('{}{}'.format(ctx.author.mention, ret))
+        await ctx.send('{}\n{}'.format(ctx.author.mention, ret))
         return
 
     rep = args[0] or ''
     logout = len(args) >= 2 and args[1] == '下'
 
     doc.StatusSheet.update_d(exe, rep, logout)
-    await ctx.send('{} 代: "{}" {}'.format(
-        ctx.author.mention, rep, ctx.bot.get_user(get_user_from_name(rep)['id']).mention))
+    await ctx.send('{} {}: {} {}'.format(
+        ctx.author.mention, logout and '下' or '代', rep, ctx.bot.get_user(get_user_from_name(rep)['id']).mention))
 
     return
