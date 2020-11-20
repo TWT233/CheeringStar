@@ -21,5 +21,9 @@ async def action(ctx: commands.Context, *args):
                                                         get_user_from_name(rep)['id']).mention or ''))
     except MemberNotFound:
         return
-    else:
-        return
+
+
+@action.error
+async def error_handling(ctx, error):
+    if isinstance(error, commands.BadArgument):
+        await ctx.send("参数错误")
