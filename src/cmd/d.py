@@ -16,12 +16,8 @@ async def action(ctx: commands.Context, *args):
 
     if len(args) == 0:
         d_list = doc.StatusSheet.get_d(exe)
-        ret = '誰在代我：'
-        for i in d_list['reped']:
-            ret += '\n' + i
-        ret += '\n我在代誰：'
-        for i in d_list['rep']:
-            ret += '\n' + i
+        ret = '誰在代我：' + '\n'.join(d_list['reped'])
+        ret += '\n我在代誰：' + '\n'.join(d_list['rep'])
         await ctx.send('{}\n{}'.format(ctx.author.mention, ret))
         return
 
