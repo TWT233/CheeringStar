@@ -61,7 +61,12 @@ class StatusSheet:
     def update_d(exe: str, rep: str, logout: bool):
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
             if StatusSheet.sheet[i][3] == rep:
-                StatusSheet.sheet_update('C{}'.format(i + 1), [[logout and '' or exe]])
+                if logout and StatusSheet.sheet[i][2] == exe:
+                    StatusSheet.sheet_update('C{}'.format(i + 1), [['']])
+                    return
+                else:
+                    StatusSheet.sheet_update('C{}'.format(i + 1), [[logout and '' or exe]])
+                    return
 
     @staticmethod
     def update_jd(exe: str, rep: str, enter: bool):
