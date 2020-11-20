@@ -26,7 +26,7 @@ async def action(ctx: commands.Context, *args):
         return
 
     rep = args[0] or ''
-    logout = len(args) >= 2 and args[2] == '下'
+    logout = len(args) >= 2 and args[1] == '下'
 
     doc.StatusSheet.update_d(exe, rep, logout)
     await ctx.send('{} 代: "{}" {}'.format(
