@@ -58,6 +58,12 @@ class StatusSheet:
                 StatusSheet.sheet_update('G{}'.format(i + 1), [[cmt]])
 
     @staticmethod
+    def update_d(exe: str, rep: str, logout: bool):
+        for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
+            if StatusSheet.sheet[i][3] == rep:
+                StatusSheet.sheet_update('C{}'.format(i + 1), [[logout and '' or exe]])
+
+    @staticmethod
     def update_jd(exe: str, rep: str, enter: bool):
         for i in range(StatusSheet.__begin, min(len(StatusSheet.sheet), StatusSheet.__end)):
             if StatusSheet.sheet[i][3] == (rep or exe):
@@ -95,3 +101,18 @@ class StatusSheet:
                 shu_list.append({'name': i[3], 'dmg': i[4], 'cmt': i[5]})
 
         return shu_list
+
+    @staticmethod
+    def get_d(exe: str):
+        d_list = {
+            "rep": [],
+            "reped": []
+        }
+
+        for i in StatusSheet.sheet[StatusSheet.__begin:StatusSheet.__end]:
+            if i[2] == exe:
+                d_list['rep'].append(i[3])
+            if i[3] == exe:
+                d_list['reped'].append(i[2])
+
+        return d_list
