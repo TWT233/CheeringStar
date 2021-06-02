@@ -5,7 +5,7 @@ c = [None] * 4
 inited = [False] * 4
 
 
-async def init_c(server: int, ppfile: str, proxy: dict):
+async def init_c(server: int, ppfile: str, proxy: dict = {}):
     server -= 1
     global c
     c[server] = PCRClient(playerprefs=ppfile, proxy=proxy)
