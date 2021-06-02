@@ -22,7 +22,7 @@ def get_c(server: int):
         return None
 
 
-@commands.command(name='cx', aliases=['查詢'])
+@commands.command(name='cx', aliases=['查詢', 'CX'])
 async def action(ctx: commands.Context, uid: int):
     print(f'[cmd] cx {ctx.author.id} {uid}')
 
