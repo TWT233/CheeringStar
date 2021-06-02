@@ -16,8 +16,7 @@ intents.members = True
 
 bot = commands.Bot(command_prefix=['!', '！'],
                    description=description,
-                   intents=intents,
-                   proxy='http://localhost:7892')
+                   intents=intents)
 
 
 @bot.event
@@ -25,10 +24,7 @@ async def on_ready():
     print('[ init ] Bot online. Logged in as {} [{}]'.format(
         bot.user.name, bot.user.id))
     print('[ init ] ------')
-    await cmd.cx.init_c(1, '../config/newly.xml', {
-        "http": "localhost:7892",
-        "https": "localhost:7892"
-    })
+    await cmd.cx.init_c(1, '../config/newly.xml', {})
 
 
 bot.add_command(cmd.cx.action)

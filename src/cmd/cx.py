@@ -1,25 +1,6 @@
 from discord.ext import commands
 
-from nowem import PCRClient
-
-c = [None] * 4
-inited = [False] * 4
-
-
-async def init_c(server: int, ppfile: str, proxy: dict):
-    server -= 1
-    global c
-    c[server] = PCRClient(playerprefs=ppfile, proxy=proxy)
-    await c[server].login()
-    inited[server] = True
-
-
-def get_c(server: int):
-    server -= 1
-    if inited[server]:
-        return c[server]
-    else:
-        return None
+from client import get_c
 
 
 @commands.command(name='cx', aliases=['查詢', 'CX'])
@@ -44,7 +25,7 @@ PJJC場次：{u['grand_arena_group']}，PJJC排名：{u['grand_arena_rank']}''')
 
 
 @action.error
-async def err_ba(ctx, error):
+async def err_uid(ctx, error):
     if isinstance(error, commands.BadArgument):
         await ctx.send(ctx.author.mention + '''UID错误，请输入九位数字UID，UID不需要每三位分隔。
 例如：!cx 123456789''')
