@@ -32,7 +32,7 @@ PJJC場次：{u['grand_arena_group']}，PJJC排名：{u['grand_arena_rank']}''')
         """查询台一PVP场次，用法：[!1cx 九位UID]，注意空格哦"""
         print(f'[cmd] cx {ctx.author.id} {uid}')
 
-        await ctx.send(ctx.author.mention + self.get_u(1, uid))
+        await ctx.send(ctx.author.mention + (await self.get_u(1, uid)))
         return
 
     @commands.command(name='2cx', aliases=['二區查詢', '二区查询', '2CX'])
@@ -40,7 +40,7 @@ PJJC場次：{u['grand_arena_group']}，PJJC排名：{u['grand_arena_rank']}''')
         """查询台二PVP场次，用法：[!2cx 九位UID]，注意空格哦"""
         print(f'[cmd] 2cx {ctx.author.id} {uid}')
 
-        await ctx.send(ctx.author.mention + self.get_u(2, uid))
+        await ctx.send(ctx.author.mention + (await self.get_u(2, uid)))
         return
 
     @one_cx.error
