@@ -118,3 +118,13 @@ class Subscription(commands.Cog, name='速查排名类'):
             print(e)
             await ctx.send(ctx.author.mention + '查询出错，UID错误/机器人故障/游戏服务器维护')
             return
+
+    @bind.error
+    @unbind.error
+    @pvp.error
+    async def err_uid(self, ctx, error):
+        if isinstance(error, commands.BadArgument):
+            await ctx.send(ctx.author.mention + '服务器序号要用数字表示，uid为连续九位数字。例如：!bind 1 123456789')
+
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(ctx.author.mention + '缺少参数哦，检查一下是不是漏了服务器序号。正确例：!bind 1 123456789')
