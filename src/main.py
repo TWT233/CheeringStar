@@ -2,14 +2,11 @@
 
 # -*- coding: utf-8 -*-
 
-import yaml
 from discord.ext import commands
 
 import client
 import cmd
-
-# load config file
-conf = yaml.load(open('../conf/config.yaml', encoding='utf-8'), Loader=yaml.FullLoader)
+from config import conf
 
 # init discord bot
 description = 'チアリング☆スター：公主连接台服PVP查询机器人\n开发&维护：TWT#2333，有BUG/想要新功能的话欢迎PM'
