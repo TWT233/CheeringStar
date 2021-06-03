@@ -133,3 +133,4 @@ conf/
 !conf/config.yaml.placeholder
 token.pickle
 
+db/
