@@ -6,7 +6,8 @@ from client import get_c
 class GroupQuery(commands.Cog, name='场次查询类指令'):
     """查询PVP场次"""
 
-    async def get_u(self, n: int, uid: int) -> str:
+    @staticmethod
+    async def get_u(n: int, uid: int) -> str:
         c = get_c(n)
         if not c:
             return '不支持当前服务器'
@@ -23,7 +24,7 @@ PJJC場次：{u['grand_arena_group']}，PJJC排名：{u['grand_arena_rank']}''')
                 ret += '\n其實是想查其他區？請輸入!help查看其它指令'
 
         except:
-            ret = '查询出错，请检查UID是否正确\n其實是想查其他服？請輸入!help查看其它指令'
+            ret = '查询出错，UID故障/机器人故障/游戏服务器维护\n其实是想查其他服？输入【!help】查看其他服查询指令'
 
         return ret
 
