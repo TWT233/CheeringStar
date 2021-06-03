@@ -25,6 +25,7 @@ class Subscription(commands.Cog, name='速查排名类'):
         embed.add_field(name='二服1号', value=f"{now_bind[0].t2_1 or '空'}", inline=True)
         embed.add_field(name='二服2号', value=f"{now_bind[0].t2_2 or '空'}", inline=True)
         embed.add_field(name='\u200b', value='\u200b', inline=True)
+        embed.set_footer(text='接下来就可以用[!pvp]指令速查排名啦')
 
         return True, embed
 
