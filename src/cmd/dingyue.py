@@ -29,7 +29,7 @@ class Subscription(commands.Cog, name='速查排名类'):
 
         return True, embed
 
-    @commands.command(name='bind', aliases=['綁定', '绑定'])
+    @commands.command(name='bind', aliases=['綁定', '绑定', 'BIND'])
     async def bind(self, ctx: commands.Context, server_id: int, uid: int):
         """绑定账号，方便查询排名，用法：[!bind 服务器序号 九位UID]，注意空格哦"""
         print(f'[cmd] bind {ctx.author.id} {server_id} {uid}')
@@ -47,7 +47,7 @@ class Subscription(commands.Cog, name='速查排名类'):
             await ctx.send(ctx.author.mention + res)
         return
 
-    @commands.command(name='unbind', aliases=['解綁', '解绑'])
+    @commands.command(name='unbind', aliases=['解綁', '解绑', 'UNBIND'])
     async def unbind(self, ctx: commands.Context, server_id: int):
         """解绑账号，用法：[!unbind 服务器序号]，注意空格哦"""
         print(f'[cmd] unbind {ctx.author.id} {server_id}')
@@ -82,7 +82,7 @@ class Subscription(commands.Cog, name='速查排名类'):
 
         return ret
 
-    @commands.command(name='pvp')
+    @commands.command(name='pvp', alias=['PVP'])
     async def pvp(self, ctx: commands.Context):
         """快速查询pvp排名，用法：[!pvp]，需要先绑定账号"""
         print(f'[cmd] pvp {ctx.author.id}')
