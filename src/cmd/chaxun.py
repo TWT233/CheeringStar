@@ -1,39 +1,54 @@
+from typing import Tuple, Union
+
+from discord import Embed
 from discord.ext import commands
 
 from client import get_c
 
 
-class GroupQuery(commands.Cog, name='场次查询类指令'):
+class GroupQuery(commands.Cog, name='场次查询类'):
     """查询PVP场次"""
 
     @staticmethod
-    async def get_u(n: int, uid: int) -> str:
+    async def get_u(n: int, uid: int) -> Tuple[bool, Union[Embed, str]]:
         c = get_c(n)
         if not c:
-            return '不支持当前服务器'
+            return False, '不支持当前服务器'
 
         try:
             req_result = await c.call.profile().get_profile(int(uid)).exec()
             u = req_result['user_info']
 
-            ret = (f'''
-昵稱：{u['user_name']} ，UID：{u['viewer_id']}，{n}服
-JJC場次：{u['arena_group']}，JJC排名：{u['arena_rank']}
-PJJC場次：{u['grand_arena_group']}，PJJC排名：{u['grand_arena_rank']}''')
+            embed = Embed(color=0x56b9eb)
+            embed.add_field(name='昵稱', value=f"{u['user_name']}", inline=True)
+            embed.add_field(name='JJC場次', value=f"{u['arena_group']}", inline=True)
+            embed.add_field(name='JJC排名', value=f"{u['arena_rank']}", inline=True)
+            embed.add_field(name='UID', value=f"{u['viewer_id']} @ {n}服", inline=True)
+            embed.add_field(name='PJJC場次', value=f"{u['grand_arena_group']}", inline=True)
+            embed.add_field(name='PJJC排名', value=f"{u['grand_arena_rank']}", inline=True)
+
+            footer = ''
             if u['team_level'] < 187:
-                ret += '\n其實是想查其他區？請輸入!help查看其它指令'
+                footer += "查錯了服？輸[!help]查看其他服查詢指令"
+            footer += '\n新增綁定賬號速查排名功能，輸[!help]了解'
+            embed.set_footer(text=footer)
 
-        except:
-            ret = '查询出错，UID故障/机器人故障/游戏服务器维护\n其实是想查其他服？输入【!help】查看其他服查询指令'
+            return True, embed
 
-        return ret
+        except Exception as e:
+            print(e)
+            return False, '查询出错，UID故障/机器人故障/游戏服务器维护\n【!help】查看其他服查询指令'
 
     @commands.command(name='1cx', aliases=['查詢', '查询', '一区查询', 'CX', 'cx'])
     async def one_cx(self, ctx: commands.Context, uid: int):
         """查询台一PVP场次，用法：[!1cx 九位UID]，注意空格哦"""
         print(f'[cmd] cx {ctx.author.id} {uid}')
 
-        await ctx.send(ctx.author.mention + (await self.get_u(1, uid)))
+        status, res = await self.get_u(1, uid)
+        if status:
+            await ctx.send(ctx.author.mention, embed=res)
+        else:
+            await ctx.send(ctx.author.mention + res)
         return
 
     @commands.command(name='2cx', aliases=['二區查詢', '二区查询', '2CX'])
@@ -41,7 +56,11 @@ PJJC場次：{u['grand_arena_group']}，PJJC排名：{u['grand_arena_rank']}''')
         """查询台二PVP场次，用法：[!2cx 九位UID]，注意空格哦"""
         print(f'[cmd] 2cx {ctx.author.id} {uid}')
 
-        await ctx.send(ctx.author.mention + (await self.get_u(2, uid)))
+        status, res = await self.get_u(2, uid)
+        if status:
+            await ctx.send(ctx.author.mention, embed=res)
+        else:
+            await ctx.send(ctx.author.mention + res)
         return
 
     @one_cx.error
