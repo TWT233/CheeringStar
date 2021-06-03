@@ -76,10 +76,11 @@ class Subscription(commands.Cog):
         print(f'[cmd] pvp {ctx.author.id}')
 
         now_bind = get(ctx.author.id)
-        ret = f'''
-当前绑定情况：
-一服：{now_bind[0].t1_1 or '空'}/{now_bind[0].t1_2 or '空'}
-二服：{now_bind[0].t2_1 or '空'}/{now_bind[0].t2_2 or '空'}'''
+
+        if not now_bind:
+            await ctx.send(ctx.author.mention + '尚无绑定记录，请使用[!bind 服务器序号 九位UID]')
+            return
+
 
         try:
             embed = Embed(title=f'速查排名@{datetime.now().strftime("%H:%M:%S")}')
