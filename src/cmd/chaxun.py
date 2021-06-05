@@ -39,7 +39,7 @@ class GroupQuery(commands.Cog, name='场次查询类'):
             print(e)
             return False, '查询出错，UID故障/机器人故障/游戏服务器维护\n輸[!help]查看其他服查询指令'
 
-    @commands.cooldown(1, 120, commands.BucketType.user)
+    @commands.cooldown(1, 60, commands.BucketType.user)
     @commands.command(name='1cx', aliases=['查詢', '查询', '一区查询', 'CX', 'cx'])
     async def one_cx(self, ctx: commands.Context, uid: int):
         """查询台一PVP场次，用法：[!1cx 九位UID]，注意空格哦"""
@@ -52,7 +52,7 @@ class GroupQuery(commands.Cog, name='场次查询类'):
             await ctx.send(ctx.author.mention + res)
         return
 
-    @commands.cooldown(1, 120, commands.BucketType.user)
+    @commands.cooldown(1, 60, commands.BucketType.user)
     @commands.command(name='2cx', aliases=['二區查詢', '二区查询', '2CX'])
     async def two_cx(self, ctx: commands.Context, uid: int):
         """查询台二PVP场次，用法：[!2cx 九位UID]，注意空格哦"""

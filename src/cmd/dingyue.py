@@ -9,7 +9,7 @@ from db.crud import bind, get, unbind
 
 
 class Subscription(commands.Cog, name='速查排名类'):
-    """绑定与快速查询排名"""
+    """绑定与速查排名"""
 
     @staticmethod
     def get_bind_embed(did: int) -> Tuple[bool, Union[str, Embed]]:
@@ -82,10 +82,10 @@ class Subscription(commands.Cog, name='速查排名类'):
 
         return ret
 
-    @commands.cooldown(1, 120, commands.BucketType.user)
+    @commands.cooldown(1, 60, commands.BucketType.user)
     @commands.command(name='pvp', alias=['PVP'])
     async def pvp(self, ctx: commands.Context):
-        """快速查询pvp排名，用法：[!pvp]，需要先绑定账号"""
+        """双场排名速查，用法：[!pvp]，需要先绑定账号"""
         print(f'[cmd] pvp {ctx.author.id}')
 
         now_bind = get(ctx.author.id)
@@ -132,4 +132,4 @@ class Subscription(commands.Cog, name='速查排名类'):
             await ctx.send(ctx.author.mention + '缺少参数哦，检查一下是不是漏了服务器序号。正确例：!bind 1 123456789')
 
         if isinstance(error, commands.CommandOnCooldown):
-            await ctx.send(ctx.author.mention + '两分钟内仅可查询一次，请稍后再来')
+            await ctx.send(ctx.author.mention + '一分钟内仅可查询一次，请稍后再来')
