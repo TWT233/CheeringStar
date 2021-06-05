@@ -82,6 +82,7 @@ class Subscription(commands.Cog, name='速查排名类'):
 
         return ret
 
+    @commands.cooldown(1, 120, commands.BucketType.user)
     @commands.command(name='pvp', alias=['PVP'])
     async def pvp(self, ctx: commands.Context):
         """快速查询pvp排名，用法：[!pvp]，需要先绑定账号"""
@@ -129,3 +130,6 @@ class Subscription(commands.Cog, name='速查排名类'):
 
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(ctx.author.mention + '缺少参数哦，检查一下是不是漏了服务器序号。正确例：!bind 1 123456789')
+
+        if isinstance(error, commands.CommandOnCooldown):
+            await ctx.send(ctx.author.mention + '两分钟内仅可查询一次，请稍后再来')
