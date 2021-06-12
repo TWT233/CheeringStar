@@ -83,7 +83,7 @@ class Subscription(commands.Cog, name='速查排名类'):
         return ret
 
     @commands.cooldown(1, 60, commands.BucketType.user)
-    @commands.command(name='pvp', alias=['PVP'])
+    @commands.command(name='pvp', aliases=['PVP'])
     async def pvp(self, ctx: commands.Context):
         """双场排名速查，用法：[!pvp]，需要先绑定账号"""
         print(f'[cmd] pvp {ctx.author.id}')
