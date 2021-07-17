@@ -16,7 +16,7 @@ class GroupQuery(commands.Cog, name='场次查询类'):
             return False, '不支持当前服务器'
 
         try:
-            req_result = await c.call.profile().get_profile(int(uid)).exec()
+            req_result = await c.call.profile.get_profile(int(uid)).exec()
             u = req_result['user_info']
 
             embed = Embed(color=0x56b9eb)
