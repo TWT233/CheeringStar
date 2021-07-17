@@ -72,7 +72,7 @@ class Subscription(commands.Cog, name='速查排名类'):
             return '不支持当前服务器'
 
         try:
-            req_result = await c.call.profile().get_profile(int(uid)).exec()
+            req_result = await c.call.profile.get_profile(int(uid)).exec()
             u = req_result['user_info']
 
             ret = f'''J: {u['arena_rank']} 名 / P: {u['grand_arena_rank']} 名'''
