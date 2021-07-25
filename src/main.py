@@ -2,60 +2,31 @@
 
 # -*- coding: utf-8 -*-
 
-import discord
 from discord.ext import commands
 
+import client
 import cmd
-from battle import Battle
-from config import Common
-from doc import StatusSheet, DamageRecord
-
-# init config
-Common('../config/config.json')
-print('[ init ] Config loaded. Registered members: {}'.format(len(Common.guild()['members'])))
-print('[ init ] ------')
-
-# init battle logger
-Battle(Common.c['boss'], '../config/battle.json')
-print('[ init ] Battle logger online. Current: {}-{}'.format(Battle.current()['round'], Battle.current()['boss']))
-print('[ init ] ------')
-
-# init google doc
-StatusSheet('../config/' + Common.token()['google'], Common.sheets()['key'], Common.sheets()['status'])
-print('[ init ] Status sheet loaded.')
-print('[ init ] ------')
-DamageRecord('../config/' + Common.token()['google'], Common.sheets()['key'], Common.sheets()['damage'])
-print('[ init ] Damage sheet loaded.')
-print('[ init ] ------')
+from config import conf
 
 # init discord bot
-description = '''hatsunene'''
+description = '''チアリング☆スター：公主连接台服PVP查询Bot，开发&维护：TWT#2333
+有BUG/想要新功能的话欢迎PM，但出于各种原因不做侦听排名变动的功能'''
 
-intents = discord.Intents.default()
-intents.members = True
-
-bot = commands.Bot(command_prefix=['!', '！'], description=description, intents=intents)
+bot = commands.Bot(command_prefix=['!', '！'], description=description, help_command=cmd.MyHelp(),
+                   proxy=conf['bot']['proxy'])
 
 
 @bot.event
 async def on_ready():
     print('[ init ] Bot online. Logged in as {} [{}]'.format(bot.user.name, bot.user.id))
     print('[ init ] ------')
+    pps = conf['client']['playerprefs']
+    for i in range(len(pps)):
+        if pps[i]:
+            await client.init_c(i + 1, '../conf/' + pps[i], conf['client']['proxy'])
 
 
-bot.add_command(cmd.bd.action)
-bot.add_command(cmd.c.action)
-bot.add_command(cmd.cd.action)
-bot.add_command(cmd.cc.action)
-bot.add_command(cmd.cs.action)
-bot.add_command(cmd.d.action)
-bot.add_command(cmd.jindao.action)
-bot.add_command(cmd.jidao.action)
-bot.add_command(cmd.join.action)
-bot.add_command(cmd.ws.action)
-bot.add_command(cmd.shu_clean.action)
-bot.add_command(cmd.undo.action)
-bot.add_command(cmd.zt.action)
+bot.add_cog(cmd.GroupQuery())
+bot.add_cog(cmd.Subscription())
 
-# run
-bot.run(Common.c['token']['discord'])
+bot.run(conf['bot']['discord'])
