@@ -3,8 +3,9 @@ from typing import Tuple, Union
 
 from discord import Embed
 from discord.ext import commands
+from nowem import PCRAPIException
 
-from client import get_c
+from client import get_client
 from db.crud import bind, get, unbind
 
 
@@ -34,7 +35,7 @@ class Subscription(commands.Cog, name='速查排名类'):
         """绑定账号，方便查询排名，用法：[!bind 服务器序号 九位UID]，注意空格哦"""
         print(f'[cmd] bind {ctx.author.id} {server_id} {uid}')
 
-        if not get_c(server_id):
+        if not get_client(server_id):
             await ctx.send(ctx.author.mention + '不支持当前服务器')
             return
 
@@ -52,7 +53,7 @@ class Subscription(commands.Cog, name='速查排名类'):
         """解绑账号，用法：[!unbind 服务器序号]，注意空格哦"""
         print(f'[cmd] unbind {ctx.author.id} {server_id}')
 
-        if not get_c(server_id):
+        if not get_client(server_id):
             await ctx.send(ctx.author.mention + '不支持当前服务器')
             return
 
@@ -66,8 +67,8 @@ class Subscription(commands.Cog, name='速查排名类'):
         return
 
     @staticmethod
-    async def get_u(n: int, uid: int) -> str:
-        c = get_c(n)
+    async def get_pvp_rank(n: int, uid: int) -> str:
+        c = get_client(n)
         if not c:
             return '不支持当前服务器'
 
@@ -99,19 +100,19 @@ class Subscription(commands.Cog, name='速查排名类'):
             embed = Embed(title=f'速查排名 @ {datetime.now().strftime("%H:%M:%S")}', color=0x4af28a)
             if entry.t1_1:
                 uid = entry.t1_1
-                res = await self.get_u(1, uid)
+                res = await self.get_pvp_rank(1, uid)
                 embed.add_field(name='一服1号：' + str(uid), value=f"{res}", inline=True)
             if entry.t1_2:
                 uid = entry.t1_2
-                res = await self.get_u(1, uid)
+                res = await self.get_pvp_rank(1, uid)
                 embed.add_field(name='一服2号：' + str(uid), value=f"{res}", inline=True)
             if entry.t2_1:
                 uid = now_bind[0].t2_1
-                res = await self.get_u(2, uid)
+                res = await self.get_pvp_rank(2, uid)
                 embed.add_field(name='二服1号：' + str(uid), value=f"{res}", inline=True)
             if entry.t2_2:
                 uid = entry.t2_2
-                res = await self.get_u(2, uid)
+                res = await self.get_pvp_rank(2, uid)
                 embed.add_field(name='二服2号：' + str(uid), value=f"{res}", inline=True)
             await ctx.send(ctx.author.mention, embed=embed)
             return

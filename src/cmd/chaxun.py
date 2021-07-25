@@ -2,8 +2,9 @@ from typing import Tuple, Union
 
 from discord import Embed
 from discord.ext import commands
+from nowem import PCRAPIException
 
-from client import get_c
+from client import get_client
 
 
 class GroupQuery(commands.Cog, name='场次查询类'):
@@ -11,7 +12,7 @@ class GroupQuery(commands.Cog, name='场次查询类'):
 
     @staticmethod
     async def get_u(n: int, uid: int) -> Tuple[bool, Union[Embed, str]]:
-        c = get_c(n)
+        c = get_client(n)
         if not c:
             return False, '不支持当前服务器'
 
