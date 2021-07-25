@@ -77,9 +77,12 @@ class Subscription(commands.Cog, name='速查排名类'):
             u = req_result['user_info']
 
             ret = f'''J: {u['arena_rank']} 名 / P: {u['grand_arena_rank']} 名'''
-        except Exception as e:
+        except PCRAPIException as e:
             print(e)
-            ret = '查询出错，请检查UID'
+            ret = '查询出错，UID错误/机器人故障/游戏服务器维护'
+            if e.result_code == 214:
+                await c.login()
+                ret += '，请重试'
 
         return ret
 

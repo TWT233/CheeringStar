@@ -36,9 +36,11 @@ class GroupQuery(commands.Cog, name='场次查询类'):
 
             return True, embed
 
-        except Exception as e:
+        except PCRAPIException as e:
             print(e)
-            return False, '查询出错，UID故障/机器人故障/游戏服务器维护\n輸[!help]查看其他服查询指令'
+            if e.result_code == 214:
+                await c.login()
+            return False, '查询出错，UID故障/机器人故障/游戏服务器维护，请重试\n輸[!help]查看其他服查询指令'
 
     @commands.cooldown(1, 60, commands.BucketType.user)
     @commands.command(name='1cx', aliases=['查詢', '查询', '一区查询', 'CX', 'cx'])
