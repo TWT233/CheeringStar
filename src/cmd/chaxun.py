@@ -43,10 +43,23 @@ class GroupQuery(commands.Cog, name='场次查询类'):
             return False, '查询出错，UID故障/机器人故障/游戏服务器维护，请重试\n輸[!help]查看其他服查询指令'
 
     @commands.cooldown(1, 60, commands.BucketType.user)
-    @commands.command(name='1cx', aliases=['查詢', '查询', '一区查询', 'CX', 'cx'])
+    @commands.command(name='cx', aliases=['CX'])
+    async def one_cx(self, ctx: commands.Context, server_id: int, uid: int):
+        """查询PVP场次（不分服务器），用法：[!cx 服务器序号 九位UID]，注意空格哦"""
+        print(f'[cmd] cx {ctx.author.id} {server_id} {uid}')
+
+        status, res = await self.get_u(server_id, uid)
+        if status:
+            await ctx.send(ctx.author.mention, embed=res)
+        else:
+            await ctx.send(ctx.author.mention + res)
+        return
+
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    @commands.command(name='1cx', aliases=['查詢', '查询', '一区查询', '1CX'])
     async def one_cx(self, ctx: commands.Context, uid: int):
         """查询台一PVP场次，用法：[!1cx 九位UID]，注意空格哦"""
-        print(f'[cmd] cx {ctx.author.id} {uid}')
+        print(f'[cmd] 1cx {ctx.author.id} {uid}')
 
         status, res = await self.get_u(1, uid)
         if status:
