@@ -8,6 +8,9 @@ from nowem import PCRAPIException
 from client import get_client
 from db.crud import bind, get, unbind
 
+_ATTR_NAMES = (('t1_1', '一服1号'), ('t1_2', '一服2号'), ('t2_1', '二服1号'), ('t2_2', '二服2号'),
+               ('t3_1', '三服1号'), ('t3_2', '三服2号'), ('t4_1', '四服1号'), ('t4_2', '四服2号'))
+
 
 class Subscription(commands.Cog, name='速查排名类'):
     """绑定与速查排名"""
@@ -20,12 +23,10 @@ class Subscription(commands.Cog, name='速查排名类'):
             return False, '尚无绑定记录，请使用[!bind 服务器序号 九位UID]'
 
         embed = Embed(title=f'当前绑定情况', color=0x4af28a)
-        embed.add_field(name='一服1号', value=f"{now_bind[0].t1_1 or '空'}", inline=True)
-        embed.add_field(name='一服2号', value=f"{now_bind[0].t1_2 or '空'}", inline=True)
-        embed.add_field(name='\u200b', value='\u200b', inline=True)
-        embed.add_field(name='二服1号', value=f"{now_bind[0].t2_1 or '空'}", inline=True)
-        embed.add_field(name='二服2号', value=f"{now_bind[0].t2_2 or '空'}", inline=True)
-        embed.add_field(name='\u200b', value='\u200b', inline=True)
+        for i in _ATTR_NAMES:
+            v = getattr(now_bind[0], i[0])
+            if v:
+                embed.add_field(name=i[1], value=f"{v}", inline=True)
         embed.set_footer(text='接下来就可以用[!pvp]指令速查排名啦')
 
         return True, embed
@@ -101,22 +102,11 @@ class Subscription(commands.Cog, name='速查排名类'):
 
         try:
             embed = Embed(title=f'速查排名 @ {datetime.now().strftime("%H:%M:%S")}', color=0x4af28a)
-            if entry.t1_1:
-                uid = entry.t1_1
-                res = await self.get_pvp_rank(1, uid)
-                embed.add_field(name='一服1号：' + str(uid), value=f"{res}", inline=True)
-            if entry.t1_2:
-                uid = entry.t1_2
-                res = await self.get_pvp_rank(1, uid)
-                embed.add_field(name='一服2号：' + str(uid), value=f"{res}", inline=True)
-            if entry.t2_1:
-                uid = now_bind[0].t2_1
-                res = await self.get_pvp_rank(2, uid)
-                embed.add_field(name='二服1号：' + str(uid), value=f"{res}", inline=True)
-            if entry.t2_2:
-                uid = entry.t2_2
-                res = await self.get_pvp_rank(2, uid)
-                embed.add_field(name='二服2号：' + str(uid), value=f"{res}", inline=True)
+            for i in _ATTR_NAMES:
+                v = getattr(entry, i[0])
+                if v:
+                    res = await self.get_pvp_rank(1, v)
+                    embed.add_field(name=f'{i[1]}:{str(v)}', value=f"{res}", inline=True)
             await ctx.send(ctx.author.mention, embed=embed)
             return
 
