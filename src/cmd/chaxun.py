@@ -98,10 +98,10 @@ class GroupQuery(commands.Cog, name='场次查询类'):
     @two_cx.error
     async def err_uid(self, ctx, error):
         if isinstance(error, commands.BadArgument):
-            await ctx.send(ctx.author.mention + '''UID错误，请输入九位数字UID，UID不需要每三位分隔。例如：!1cx 123456789''')
+            await ctx.reply('UID错误，请输入九位数字UID，UID不需要每三位分隔。例如：!1cx 123456789')
 
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send(ctx.author.mention + '缺少参数哦，检查一下是不是漏了uid。正确例：!1cx 123456789')
+            await ctx.reply('缺少参数哦，检查一下是不是漏了uid。正确例：!1cx 123456789')
 
         if isinstance(error, commands.CommandOnCooldown):
-            await ctx.send(ctx.author.mention + '两分钟内仅可查询一次，请稍后再来')
+            await ctx.reply(f'太快啦！请{.2:error.retry_after}后再来\n其他命令帮助请看[!help]')
