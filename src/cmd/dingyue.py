@@ -126,4 +126,4 @@ class Subscription(commands.Cog, name='速查排名类'):
             await ctx.send(ctx.author.mention + '缺少参数哦，检查一下是不是漏了服务器序号。正确例：!bind 1 123456789')
 
         if isinstance(error, commands.CommandOnCooldown):
-            await ctx.reply(f'太快啦！请{.2:error.retry_after}后再来\n其他命令帮助请看[!help]')
+            await ctx.reply(f'太快啦！请{error.retry_after:.2}后再来\n其他命令帮助请看[!help]')

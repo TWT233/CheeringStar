@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # -*- coding: utf-8 -*-
 
 from discord.ext import commands
@@ -24,6 +22,8 @@ async def on_ready():
     for i in range(len(pps)):
         if pps[i]:
             await client.init_c(i + 1, '../conf/' + pps[i], conf['client']['proxy'])
+    print('[ init ] All clients online.')
+    print('[ init ] ------')
 
 
 bot.add_cog(cmd.GroupQuery())
