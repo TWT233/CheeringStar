@@ -68,6 +68,32 @@ class GroupQuery(commands.Cog, name='场次查询类'):
             await ctx.send(ctx.author.mention + res)
         return
 
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    @commands.command(name='3cx', aliases=['三區查詢', '三区查询', '3CX'])
+    async def three_cx(self, ctx: commands.Context, uid: int):
+        """查询台三PVP场次，用法：[!3cx 九位UID]，注意空格哦"""
+        print(f'[cmd] 3cx {ctx.author.id} {uid}')
+
+        status, res = await self.get_u(3, uid)
+        if status:
+            await ctx.send(ctx.author.mention, embed=res)
+        else:
+            await ctx.send(ctx.author.mention + res)
+        return
+
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    @commands.command(name='4cx', aliases=['四區查詢', '四区查询', '4CX'])
+    async def four_cx(self, ctx: commands.Context, uid: int):
+        """查询台四PVP场次，用法：[!4cx 九位UID]，注意空格哦"""
+        print(f'[cmd] 4cx {ctx.author.id} {uid}')
+
+        status, res = await self.get_u(4, uid)
+        if status:
+            await ctx.send(ctx.author.mention, embed=res)
+        else:
+            await ctx.send(ctx.author.mention + res)
+        return
+
     @one_cx.error
     @two_cx.error
     async def err_uid(self, ctx, error):
