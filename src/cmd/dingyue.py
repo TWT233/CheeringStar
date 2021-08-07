@@ -105,7 +105,7 @@ class Subscription(commands.Cog, name='速查排名类'):
             for i in range(len(_ATTR_NAMES)):
                 v = getattr(entry, _ATTR_NAMES[i][0])
                 if v:
-                    res = await self.get_pvp_rank(i // 2, v)
+                    res = await self.get_pvp_rank(i // 2 + 1, v)
                     embed.add_field(name=f'{_ATTR_NAMES[i][1]}:{str(v)}', value=f"{res}", inline=True)
             await ctx.send(ctx.author.mention, embed=embed)
             return
