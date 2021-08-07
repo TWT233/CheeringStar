@@ -44,7 +44,7 @@ class GroupQuery(commands.Cog, name='场次查询类'):
 
     @commands.cooldown(1, 60, commands.BucketType.user)
     @commands.command(name='cx', aliases=['CX'])
-    async def one_cx(self, ctx: commands.Context, server_id: int, uid: int):
+    async def cx(self, ctx: commands.Context, server_id: int, uid: int):
         """查询PVP场次（不分服务器），用法：[!cx 服务器序号 九位UID]，注意空格哦"""
         print(f'[cmd] cx {ctx.author.id} {server_id} {uid}')
 
