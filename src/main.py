@@ -21,7 +21,15 @@ async def on_ready():
     pps = conf['client']['playerprefs']
     for i in range(len(pps)):
         if pps[i]:
-            await client.init_c(i + 1, '../conf/' + pps[i], conf['client']['proxy'])
+            while True:
+                try:
+                    await client.init_c(i + 1, '../conf/' + pps[i], conf['client']['proxy'])
+                except Exception as e:
+                    print(e)
+                    print(f'[ init ] client {i} init failed')
+                    pass
+                else:
+                    break
     print('[ init ] All clients online.')
     print('[ init ] ------')
 
