@@ -1,0 +1,4 @@
+nowem~=0.0.8
+SQLAlchemy~=1.4.17
+discord.py~=1.7.2
+PyYAML~=5.4.1
