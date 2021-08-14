@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 # -*- coding: utf-8 -*-
 
 from discord.ext import commands
@@ -20,13 +18,11 @@ bot = commands.Bot(command_prefix=['!', '！'], description=description, help_co
 async def on_ready():
     print('[ init ] Bot online. Logged in as {} [{}]'.format(bot.user.name, bot.user.id))
     print('[ init ] ------')
-    pps = conf['client']['playerprefs']
-    for i in range(len(pps)):
-        if pps[i]:
-            await client.init_c(i + 1, '../conf/' + pps[i], conf['client']['proxy'])
+    await client.init_clients()
 
 
 bot.add_cog(cmd.GroupQuery())
 bot.add_cog(cmd.Subscription())
+bot.add_cog(cmd.Admin())
 
 bot.run(conf['bot']['discord'])

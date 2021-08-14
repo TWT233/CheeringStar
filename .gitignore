@@ -129,8 +129,10 @@ dmypy.json
 .pyre/
 
 # Configs
-conf/
+conf/*
 !conf/config.yaml.placeholder
 token.pickle
 
-db/
+# database
+db/*
+!.gitkeep

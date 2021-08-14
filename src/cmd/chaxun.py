@@ -43,10 +43,23 @@ class GroupQuery(commands.Cog, name='场次查询类'):
             return False, '查询出错，UID故障/机器人故障/游戏服务器维护，请重试\n輸[!help]查看其他服查询指令'
 
     @commands.cooldown(1, 60, commands.BucketType.user)
-    @commands.command(name='1cx', aliases=['查詢', '查询', '一区查询', 'CX', 'cx'])
+    @commands.command(name='cx', aliases=['CX'])
+    async def cx(self, ctx: commands.Context, server_id: int, uid: int):
+        """查询PVP场次（不分服务器），用法：[!cx 服务器序号 九位UID]，注意空格哦"""
+        print(f'[cmd] cx {ctx.author.id} {server_id} {uid}')
+
+        status, res = await self.get_u(server_id, uid)
+        if status:
+            await ctx.send(ctx.author.mention, embed=res)
+        else:
+            await ctx.send(ctx.author.mention + res)
+        return
+
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    @commands.command(name='1cx', aliases=['查詢', '查询', '一区查询', '1CX'])
     async def one_cx(self, ctx: commands.Context, uid: int):
         """查询台一PVP场次，用法：[!1cx 九位UID]，注意空格哦"""
-        print(f'[cmd] cx {ctx.author.id} {uid}')
+        print(f'[cmd] 1cx {ctx.author.id} {uid}')
 
         status, res = await self.get_u(1, uid)
         if status:
@@ -68,14 +81,40 @@ class GroupQuery(commands.Cog, name='场次查询类'):
             await ctx.send(ctx.author.mention + res)
         return
 
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    @commands.command(name='3cx', aliases=['三區查詢', '三区查询', '3CX'])
+    async def three_cx(self, ctx: commands.Context, uid: int):
+        """查询台三PVP场次，用法：[!3cx 九位UID]，注意空格哦"""
+        print(f'[cmd] 3cx {ctx.author.id} {uid}')
+
+        status, res = await self.get_u(3, uid)
+        if status:
+            await ctx.send(ctx.author.mention, embed=res)
+        else:
+            await ctx.send(ctx.author.mention + res)
+        return
+
+    @commands.cooldown(1, 60, commands.BucketType.user)
+    @commands.command(name='4cx', aliases=['四區查詢', '四区查询', '4CX'])
+    async def four_cx(self, ctx: commands.Context, uid: int):
+        """查询台四PVP场次，用法：[!4cx 九位UID]，注意空格哦"""
+        print(f'[cmd] 4cx {ctx.author.id} {uid}')
+
+        status, res = await self.get_u(4, uid)
+        if status:
+            await ctx.send(ctx.author.mention, embed=res)
+        else:
+            await ctx.send(ctx.author.mention + res)
+        return
+
     @one_cx.error
     @two_cx.error
     async def err_uid(self, ctx, error):
         if isinstance(error, commands.BadArgument):
-            await ctx.send(ctx.author.mention + '''UID错误，请输入九位数字UID，UID不需要每三位分隔。例如：!1cx 123456789''')
+            await ctx.reply('UID错误，请输入九位数字UID，UID不需要每三位分隔。例如：!1cx 123456789')
 
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.send(ctx.author.mention + '缺少参数哦，检查一下是不是漏了uid。正确例：!1cx 123456789')
+            await ctx.reply('缺少参数哦，检查一下是不是漏了uid。正确例：!1cx 123456789')
 
         if isinstance(error, commands.CommandOnCooldown):
-            await ctx.send(ctx.author.mention + '两分钟内仅可查询一次，请稍后再来')
+            await ctx.reply(f'太快啦！请{error.retry_after:.2f}s后再来\n其他命令帮助请看[!help]')
