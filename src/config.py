@@ -1,0 +1,11 @@
+import os
+
+import yaml
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))  # '/src/config'
+SRC_DIR = os.path.join(CURRENT_DIR, '')  # '/src'
+PROJ_DIR = os.path.join(SRC_DIR, '')  # '/'
+CONF_DIR = os.path.join(PROJ_DIR, 'conf')  # '/conf'
+
+# load config file
+conf = yaml.load(open(os.path.join(CONF_DIR, 'config.yaml'), encoding='utf-8'), Loader=yaml.FullLoader)
