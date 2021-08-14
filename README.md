@@ -1,18 +1,41 @@
 # cheeringstar
 
-# TODO List
+[discord bot] pvp rank & info query for Princess Connect Re:Dive
 
-- [ ] 处理指令
-  - [ ] 报刀 `#bd <dmg> <cmt> [rep]` `#報`
-  - [ ] 出刀 `#cd <dmg> [rep]` `#出`
-  - [ ] 残刀 `#c <cmt> [rep]` `#殘`
-  - [x] 查残刀 `#cc <dmg> [rep]` `#查殘`
-  - [x] 查树上伤害 `#cs <dmg> [rep]` `#查樹`
-  - [x] 王死 `#ws <dmg> [rep]` `#王死`
-  - [x] 清树 `#shu_clean`（管理用）
-  - [x] 撤销 `#undo`（管理用）
-  - [ ] 设置进度 `#s <round> <boss> [hp]`（管理用）
-- [ ] 表单同步
-  - [ ] 提供状态查询/修改的 API
-- [x] 成员管理
-- [ ] 进度计算
+# usage
+
+1. put your pcr account playerprefs xml files into `conf/`
+
+> get playerprefs yourself, no tutorial here >.<)
+
+2. `cp conf/config.yaml.placeholder conf/config.yaml`
+3. filling conf/config.yaml fields
+4. `pip install -r requirements.txt`
+5. `python src/main.py`
+
+# structure
+
+```
+cheeringstar
+├── conf        ---------------------- config & playerprefs laying here
+│   └── config.yaml.placeholder
+├── db
+├── LICENSE
+    ├── README.md   <----------------- you are here! 
+├── requirements.txt
+└── src
+    ├── client.py   ------------------ manage pcr clients
+    ├── cmd     ---------------------- define commands
+    │   ├── admin.py
+    │   ├── chaxun.py
+    │   ├── dingyue.py
+    │   ├── help.py
+    │   └── __init__.py
+    ├── config.py   ------------------ make config file ez to use
+    ├── db      ---------------------- db ORM
+    │   ├── crud.py
+    │   ├── __init__.py
+    │   ├── init.py
+    │   └── models.py
+    └── main.py     ------------------ program entry
+```
