@@ -1,0 +1,33 @@
+bot:
+  # discord bot token
+  discord: ""
+  proxy: ""
+  # admin list, fill their discord_id as list
+  admin:
+    - 000000000000000000
+    - 111111111111111111
+
+client:
+  #  relative path from here to xml, one xml -> one server, sequentially
+  #  e.g.:
+  #  playerprefs:
+  #    - "t1-xxxxxxxxx.xml"
+  #    - "t2-xxxxxxxxx.xml"
+  #    - "t3-xxxxxxxxx.xml"
+  #    - "t4-xxxxxxxxx.xml"
+  playerprefs:
+    - ""
+    - ""
+    - ""
+    - ""
+  proxy:
+    http: ""
+    https: ""
+  # game version, can be explicitly modified via command !version
+  # remind: !version will modify this conf file
+  # and the comments here will be discarded(cuz pyyaml do not support comments)
+  version: '2.8.1'
+
+db:
+  #  relative path from here to db, default settings given below
+  path: '../db/data.db'
