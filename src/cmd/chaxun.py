@@ -117,4 +117,4 @@ class GroupQuery(commands.Cog, name='场次查询类'):
             await ctx.reply('缺少参数哦，检查一下是不是漏了uid。正确例：!1cx 123456789')
 
         if isinstance(error, commands.CommandOnCooldown):
-            await ctx.reply(f'太快啦！请{error.retry_after:.2}后再来\n其他命令帮助请看[!help]')
+            await ctx.reply(f'太快啦！请{error.retry_after:.2f}s后再来\n其他命令帮助请看[!help]')
