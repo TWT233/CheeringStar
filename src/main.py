@@ -23,5 +23,6 @@ async def on_ready():
 
 bot.add_cog(cmd.GroupQuery())
 bot.add_cog(cmd.Subscription())
+bot.add_cog(cmd.Admin())
 
 bot.run(conf['bot']['discord'])
