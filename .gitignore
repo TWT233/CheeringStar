@@ -136,3 +136,7 @@ token.pickle
 # database
 db/*
 !.gitkeep
+
+# IDE 'n Editor workspace
+.idea/
+.code/
