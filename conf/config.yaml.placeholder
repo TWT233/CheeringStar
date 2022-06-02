@@ -20,6 +20,8 @@ client:
     - ""
     - ""
     - ""
+  # retries when net errs
+  max_retry_times: 3
   proxy:
     http: ""
     https: ""
